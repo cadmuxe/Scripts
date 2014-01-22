@@ -34,6 +34,9 @@ def ssh_firewall(sshd_port, remote_host, remote_port, username,
         username: account of public machine
         time_interval: the interval for ssh test
         identity_file: the identity file for ssh
+        
+        Should add "GatewayPorts yes" to sshd_config of remote machine
+        Then you can ssh -p remote_port remote_host to access the target machine
     """
     p = Popen(["ssh", "-R *:%s:localhost:%s" % (str(remote_port), str(sshd_port)), 
         "-N", "-i%s" % identity_file,"%s@%s" % (username, remote_host)], stdout = PIPE)
