@@ -46,9 +46,10 @@ def ssh_firewall(sshd_port, remote_host, remote_port, username,
         if check_ssh(remote_host, remote_port):
             continue
         else:
+            print "ssh closed"
             p.kill()
             p = Popen(["ssh", "-R *:%s:localhost:%s" % (str(remote_port), str(sshd_port)),
-                "-N", "%s@%s" % (username, remote_host)], stdout = PIPE)
+                "-N", "-i%s" % identity_file,"%s@%s" % (username, remote_host)], stdout = PIPE)
 
 
 if __name__ == "__main__":
